@@ -1,17 +1,25 @@
 <template>
+
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <p>test</p>
+    {{ todos }}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+import { db } from './db';
 
 export default {
   name: 'app',
+  data: () => ({ todos: [] }),
+  firestore: {
+    todos: db.collection('todos'),
+  },
   components: {
-    HelloWorld
+    // HelloWorld
   }
 }
 </script>
