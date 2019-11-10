@@ -1,97 +1,73 @@
 <template>
 
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <p>test</p>
-    <div class="notes">
-      <ul>
-        <li v-for="note in notes" v-bind:key="note.title">
-          <strong>{{ note.title }}</strong> 
-          <span>{{ note.text }}</span> 
-          <span>{{ note.createdAt }}</span>
-        </li>
-      </ul>
-
-      <form class="form" @submit="addNote">
-        <div class="form__item">
-          <input v-model="newNote.title" type="text" placeholder="title">
-        </div>
-        <div class="form__item">
-          <textarea v-model="newNote.text" placeholder="text"></textarea>
-        </div>
-        <button type="submit">add</button>
-        <div class="form__errors">
-          <ul>
-            <li v-for="error in newNote.errors" v-bind:key="error">{{error}}</li>
-          </ul>
-        </div>
-      </form>
-      
+    <div class="l-block">
+      <NotesList></NotesList>
+    </div>
+    <div class="l-block">
+      <NoteAddForm></NoteAddForm>
     </div>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import { db, Timestamp } from './db';
+import NotesList from './components/NotesList.vue'
+import NoteAddForm from './components/NoteAddForm.vue'
+import { db } from './db';
 
 export default {
   name: 'app',
   data: () => ({ 
-    notes: [],
-    newNote: {
-      title: '',
-      text: '',
-      createdAt: '',
-      errors: []
-    }
   }),
   firestore: {
     notes: db.collection('todos'),
   },
   components: {
-    // HelloWorld
+    NotesList,
+    NoteAddForm
   },
   created: function () {
     
-  },
-  methods: {
-    addNote: function (e) {
-      e.preventDefault();
-
-       this.newNote.errors= [];
-
-      if ( this.newNote.title.length == 0) {
-        this.newNote.errors.push(`field 'title' can't been empty`);
-      }
-
-      if ( this.newNote.title.length == 0) {
-        this.newNote.errors.push(`field 'text' can't been empty`);
-      }
-
-      if (this.newNote.errors.length == 0) {
-        // this.notes.push()
-        db.collection('todos').add({
-          title: this.newNote.title,
-          text: this.newNote.text,
-          createdAt: Timestamp.fromDate(new Date()),
-        })
-      }
-
-      return false;
-    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+<style lang="scss">
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #202124;
+  font-size: 14px;
+   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: rgb(154, 160, 166);
+  min-width: 420px;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+#app {
+  padding: 15px;
+}
+
+.l-block{
+  background: #292a2d;
+  // border: 1px solid #484848;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 2px 0, rgba(0, 0, 0, 0.15) 0 1px 3px 1px;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 15px;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+
+}
+
+
 </style>
