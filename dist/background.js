@@ -20,12 +20,15 @@ firebase.initializeApp(config);
 
 var defaultStorage = firebase.storage();
 var defaultFirestore = firebase.firestore();
-let notes = defaultFirestore.collection('todos');
-var myUserId = firebase.auth().currentUser.uid;
-
-// console.log(notes.orderBy("title").limit(3));
-console.log(myUserId);
-
+defaultFirestore
+    .collection('todos')
+    .get()
+    .then(qs => {
+        let data = [];
+        qs.forEach( (item) => data.push(item.data()) );
+        console.log(data);
+    });
+        
 
 
 function checkCurrentUrl(tabId, tabUrl) {
