@@ -16,32 +16,31 @@ var config = {
 };
 
 firebase.initializeApp(config);
-// console.log(firebase.app().name);  // "[DEFAULT]"
+const firestore = firebase.firestore();
 
-var defaultStorage = firebase.storage();
-var defaultFirestore = firebase.firestore();
-defaultFirestore
-    .collection('todos')
-    .get()
-    .then(qs => {
-        let data = [];
+const getDataByDomain = async (domain) => {
+    let data = [];
+    await firestore.collection('todos').get().then(qs => {
         qs.forEach( (item) => data.push(item.data()) );
-        console.log(data);
     });
-        
+    return filterByDomain(data, domain);
+}
 
+const filterByDomain = (data, domain) => {
+    return data.filter(item => item.domain === domain);
+}
 
-function checkCurrentUrl(tabId, tabUrl) {
-    var pattern=/(.+:\/\/)?([^\/]+)(\/.*)*/i;
-    var arr=pattern.exec(tabUrl);
-    var value = arr[2].replace('www.', '');
-    // Устанавливаем значение бейджу. Идентификатор указаывается в качестве ограничителя.
-    // Т.е для вкладок подходящих под условие значение 3, а для всех остальных 0
-    // chrome.browserAction.setBadgeText({text: value, tabId: tabId});
-    console.log({text: value, tabId: tabId});
+const checkCurrentUrl = (tabId, tabUrl) => {
+    const pattern=/(.+:\/\/)?([^\/]+)(\/.*)*/i;
+    const arr=pattern.exec(tabUrl);
+    const domain = arr[2].replace('www.', '');
+
+    getDataByDomain(domain).then((data) => { 
+        chrome.browserAction.setBadgeText({text: data.length+'', tabId: tabId});
+    })
 } 
 
-function changeBadgeTextOnActivated(tabInfo) {
+const changeBadgeTextOnActivated = (tabInfo) => {
     // Если поле url имеет значение, т.е вкладка загружена.
     // В ином случае данные будут получены из метода changeBadgeTextOnUpdate
     chrome.tabs.get(tabInfo.tabId, function (tab) {
@@ -49,7 +48,7 @@ function changeBadgeTextOnActivated(tabInfo) {
     });
 }
 
-function changeBadgeTextOnUpdate(tabId, changeInfo, tab) {
+const changeBadgeTextOnUpdate = (tabId, changeInfo, tab) => {
     // Если страница загруженна. Допустим мы не переключали вкладки, а обновили открытую
     if (changeInfo.status == "complete") checkCurrentUrl(tabId, tab.url);
 }
