@@ -65,7 +65,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style lang="scss">
   .note-add-form{
     
     &__title{
@@ -95,13 +95,17 @@ export default {
         padding: 0 10px;
         background: none;
         color: #fff;
+        font: inherit;
         transition: all 0.2s ease-in;
+        // background: rgba(138, 180, 248, 0.08);
+        background: #31353c;
+        outline: none !important
 
-        &:focus,
-        &:hover{
-          background: rgba(138, 180, 248, 0.08);
-          outline: none;
-        }
+        // &:focus,
+        // &:hover{
+        //   background: rgba(138, 180, 248, 0.08);
+        //   outline: none;
+        // }
       }
 
       textarea{
@@ -114,12 +118,16 @@ export default {
         background: none;
         color: #fff;
         font: inherit;
+        // background: rgba(138, 180, 248, 0.08);
+        background: #31353c;
+        transition: all 0.2s ease-in;
+        outline: none !important;
 
-        &:focus,
-        &:hover{
-          background: rgba(138, 180, 248, 0.08);
-          outline: none;
-        }
+        // &:focus,
+        // &:hover{
+        //   background: rgba(138, 180, 248, 0.08);
+        //   outline: none;
+        // }
       }
 
       button{
@@ -130,12 +138,13 @@ export default {
         background: rgba(138, 180, 248, 0.68);
         color: #fff;
         cursor: pointer;
+        outline: none !important;
 
-        &:focus,
-        &:hover{
-          background: rgba(138, 180, 248, 0.38);
-          outline: none;
-        }
+        // &:focus,
+        // &:hover{
+        //   background: rgba(138, 180, 248, 0.38);
+        //   outline: none;
+        // }
       }
     }
   }

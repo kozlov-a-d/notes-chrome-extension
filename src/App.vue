@@ -2,7 +2,7 @@
 
   <div id="app">
     <div class="l-block">
-      <NotesList></NotesList>
+      <!-- <NotesList></NotesList> -->
     </div>
     <div class="l-block">
       <NoteAddForm></NoteAddForm>
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import NotesList from './components/NotesList.vue'
-import NoteAddForm from './components/NoteAddForm.vue'
+// import NotesList from './components/NotesList.vue';
+import NoteAddForm from './components/NoteAddForm.vue';
 import { db } from './db';
 
 export default {
@@ -23,7 +23,7 @@ export default {
     notes: db.collection('todos'),
   },
   components: {
-    NotesList,
+    // NotesList,
     NoteAddForm
   },
   created: function () {
