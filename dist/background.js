@@ -35,7 +35,6 @@ const checkCurrentUrl = (tabId, tabUrl) => {
     const domain = arr[2].replace('www.', '');
 
     getDataByDomain(domain).then((data) => { 
-        console.log('request ', domain);
         chrome.browserAction.setBadgeText({text: data.length+'', tabId: tabId});
     })
 } 
