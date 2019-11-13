@@ -3,7 +3,6 @@
  * крутится всегда и один для всего браузера, умеет только слать сообщения на разные слои и слушать их.
  */
 
- // TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAtBeQBW1JujViibEohFXg4tBfU7RZfEls",
@@ -36,6 +35,7 @@ const checkCurrentUrl = (tabId, tabUrl) => {
     const domain = arr[2].replace('www.', '');
 
     getDataByDomain(domain).then((data) => { 
+        console.log('request ', domain);
         chrome.browserAction.setBadgeText({text: data.length+'', tabId: tabId});
     })
 } 
